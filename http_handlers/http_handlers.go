@@ -12,7 +12,7 @@ func Ping(c *gin.Context) {
 }
 
 func Cocktail(c *gin.Context) {
-	log.Println("In middleware")
+	log.Println("In cocktail main handler")
 
 	c.JSON(200, gin.H{
 		"message": "pong",
