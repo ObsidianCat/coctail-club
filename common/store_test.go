@@ -24,7 +24,8 @@ func TestLoadingDataIntoStore(t *testing.T) {
 	store := NewStorage()
 	store.LoadCocktails()
 	t.Run("Create ByIngredients structure", func(t *testing.T) {
-
+		result := convertCocktailsListInByIngredient(cocktailsListMock)
+		assert.NotNil(t, result)
 	})
 
 	t.Run("Create ById structure", func(t *testing.T) {

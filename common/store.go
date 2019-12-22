@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 // define data structure
@@ -18,7 +19,7 @@ type Cocktails []Cocktail
 type Store struct {
 	cocktailsList Cocktails
 	ById          map[int]Cocktail
-	ByIngredients map[string][]int
+	ByIngredient  map[string][]int
 }
 
 //creating new store
@@ -38,7 +39,6 @@ func (s Store) LoadCocktails() {
 	cocktailsList := []Cocktail{}
 	//var cocktailsList []Cocktail
 
-	// unmarshall it
 	err = json.Unmarshal(data, &cocktailsList)
 	if err != nil {
 		fmt.Println("error:", err)
@@ -56,7 +56,15 @@ func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
 	return byId
 }
 
-func convertCocktailsListInByIngredients(cocktails []Cocktail) map[string][]int {
-
-	return nil
+func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
+	byIngredient := make(map[string][]int)
+	for _, c := range cocktails {
+		var ingridients []string
+		for _, ing := range c.Ingredients {
+			ings := strings.Fields(ing)
+			fmt.Println(ings, len(ings))
+			ingridients = append(ingridients, ings...)
+		}
+	}
+	return byIngredient
 }
