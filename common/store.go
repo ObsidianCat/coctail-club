@@ -12,6 +12,8 @@ type Cocktail struct {
 	Name        string
 	Ingredients []string
 	Id          int
+	Preparation string
+	Url         string
 }
 
 type Cocktails []Cocktail
@@ -46,6 +48,7 @@ func (s Store) LoadCocktails() {
 
 	s.cocktailsList = cocktailsList
 	s.ById = convertCocktailsListIntoById(cocktailsList)
+	s.ByIngredient = convertCocktailsListInByIngredient(cocktailsList)
 }
 
 func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
@@ -59,11 +62,21 @@ func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
 func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 	byIngredient := make(map[string][]int)
 	for _, c := range cocktails {
-		var ingridients []string
-		for _, ing := range c.Ingredients {
-			ings := strings.Fields(ing)
-			fmt.Println(ings, len(ings))
-			ingridients = append(ingridients, ings...)
+		//for ingredients list in cocktails
+		for _, ingredient := range c.Ingredients {
+			//split into separate words
+			searchTerms := strings.Fields(ingredient)
+
+			//for every search word
+			for _, term := range searchTerms {
+				termNormalized := strings.ToLower(term)
+				elem, ok := byIngredient[termNormalized]
+				if ok {
+					byIngredient[termNormalized] = append(elem, c.Id)
+				} else {
+					byIngredient[termNormalized] = []int{c.Id}
+				}
+			}
 		}
 	}
 	return byIngredient

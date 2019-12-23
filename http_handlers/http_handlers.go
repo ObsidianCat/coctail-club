@@ -11,10 +11,18 @@ func Ping(c *gin.Context) {
 	})
 }
 
-func Cocktail(c *gin.Context) {
+func CocktailByIngredient(c *gin.Context) {
 	log.Println("In cocktail main handler")
 
 	c.JSON(200, gin.H{
-		"message": "pong",
+		"message": "ingredient",
+	})
+}
+
+func CocktailByName(c *gin.Context) {
+	log.Println("In cocktail main handler")
+
+	c.JSON(200, gin.H{
+		"message": "name",
 	})
 }

@@ -1,17 +1,23 @@
 [
   {
     "id": 1,
-    "name": "Espresso Martini",
-    "ingredients": ["Finlandia Vodka", "Tia Maria", "coffee", "sugar"]
+    "name": "Manhattan",
+    "ingredients": ["Rye Whisky", "Sweet Vermouth", "Angostura Bitters"],
+    "preparation": "Combine all the ingredients in a mixing glass filled with ice & stir.\nStrain into a chilled cocktail glass.\nGarnish with a Maraschino Cherry.",
+    "url": "https://thebarcabinet.com/recipes/whiskey-cocktails/manhattan/"
   },
   {
     "id": 2,
-    "name": "Clover Club",
-    "ingredients": ["Jindea Gin", "Martini Bianco", "Chambord", "egg white", "sugar", "lemon"]
+    "name": "Mojito",
+    "ingredients": ["White Rum", "Sugar Syrup", "Lime Wedges", "Fresh Mint", "Soda Water"],
+    "preparation": "Place the Mint, Sugar Syrup & Lime wedges into a highball glass & lightly muddle the ingredients together. The Lime wedges & Mint leaves should be bruised to release their juices & essential oils.\nFill the glass with crushed ice, pour over the White Rum & stir.\nTop up with Soda Water & stir well from the bottom up.\nGarnish with a sprig of Mint & serve with a straw.",
+    "url": "https://thebarcabinet.com/recipes/rum-cocktails/mojito/"
   },
   {
     "id": 3,
-    "name": "Mojito Royale",
-    "ingredients": ["Bacardi Rum", "mint", "lime", "sugar"]
+    "name": "Espresso Martini",
+    "ingredients": ["Vodka", "Kahlua", "Espresso Coffee", "Sugar Syrup"],
+    "preparation": "Combine all ingredients in a shaker filled with ice & shake well.\nStrain the mixture into a chilled cocktail Martini glass.\nCarefully place three coffee beans on top of the drink for garnish & serve.",
+    "url": "https://thebarcabinet.com/recipes/vodka-cocktails/espresso-martini/"
   }
 ]
