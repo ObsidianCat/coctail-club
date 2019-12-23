@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
 	"strings"
 )
 
@@ -19,20 +21,40 @@ type Cocktail struct {
 type Cocktails []Cocktail
 
 type Store struct {
-	cocktailsList Cocktails
-	ById          map[int]Cocktail
-	ByIngredient  map[string][]int
+	ById         map[int]Cocktail
+	ByIngredient map[string][]int
+	ByName       map[string]int
 }
 
+var storePointer *Store
+
 //creating new store
-func NewStorage() *Store {
-	return &Store{}
+func StoreInit() *Store {
+	s := Store{}
+	storePointer = &s
+	storePointer.LoadCocktails()
+	return storePointer
+}
+
+func GetStore() *Store {
+	if storePointer != nil {
+		return storePointer
+	} else {
+		StoreInit()
+		return storePointer
+	}
 }
 
 //load cocktails recipes from file
-func (s Store) LoadCocktails() {
+func (s *Store) LoadCocktails() {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(dir)
+
 	// read file
-	data, err := ioutil.ReadFile("./data/cocktail_recipes.json")
+	data, err := ioutil.ReadFile(dir + "/cocktail_recipes.json")
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -46,9 +68,10 @@ func (s Store) LoadCocktails() {
 		fmt.Println("error:", err)
 	}
 
-	s.cocktailsList = cocktailsList
-	s.ById = convertCocktailsListIntoById(cocktailsList)
-	s.ByIngredient = convertCocktailsListInByIngredient(cocktailsList)
+	//(*s) converting pointer of the receiver to the value of the receiver
+	(*s).ById = convertCocktailsListIntoById(cocktailsList)
+	(*s).ByIngredient = convertCocktailsListInByIngredient(cocktailsList)
+	(*s).ByName = convertCocktailsListIntoByName(cocktailsList)
 }
 
 func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
@@ -57,6 +80,13 @@ func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
 		byId[c.Id] = c
 	}
 	return byId
+}
+func convertCocktailsListIntoByName(cocktails []Cocktail) map[string]int {
+	byName := make(map[string]int)
+	for _, c := range cocktails {
+		byName[strings.ToLower(c.Name)] = c.Id
+	}
+	return byName
 }
 
 func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {

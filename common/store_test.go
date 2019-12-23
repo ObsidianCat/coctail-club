@@ -23,13 +23,13 @@ var cocktailsListMock = []Cocktail{
 	}}
 
 func TestStoreCreation(t *testing.T) {
-	store := NewStorage()
-	require.NotNil(t, store)
+	require := assert.New(t)
+	storePointer = GetStore()
+	require.NotNil(storePointer)
+	require.Equal(storePointer.ByName["mojito"], 2, "By name map return cocktail id")
 }
 
 func TestLoadingDataIntoStore(t *testing.T) {
-	store := NewStorage()
-	store.LoadCocktails()
 	t.Run("Create ByIngredients structure", func(t *testing.T) {
 		require := assert.New(t)
 
