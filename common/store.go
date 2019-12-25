@@ -2,10 +2,11 @@ package common
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
-	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -45,25 +46,34 @@ func GetStore() *Store {
 	}
 }
 
-//load cocktails recipes from file
-func (s *Store) LoadCocktails() {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
+func ReadDataFile() ([]byte, error) {
+	_, file, _, ok := runtime.Caller(1)
+	if !ok {
+		return nil, errors.New("cannot read file")
 	}
-	fmt.Println(dir)
 
-	// read file
-	data, err := ioutil.ReadFile(dir + "/cocktail_recipes.json")
+	prefixPath := filepath.Dir(file)
+	path := prefixPath + "/cocktail_recipes.json"
+
+	data, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Print(err)
+		return nil, errors.New("cannot read file")
 	}
+
+	return data, nil
+}
+
+//load cocktails recipes from file
+func (s *Store) LoadCocktails() {
+	// read file
+	data, _ := ReadDataFile()
 
 	// json data
 	cocktailsList := []Cocktail{}
 	//var cocktailsList []Cocktail
 
-	err = json.Unmarshal(data, &cocktailsList)
+	err := json.Unmarshal(data, &cocktailsList)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
