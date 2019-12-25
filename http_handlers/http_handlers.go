@@ -15,6 +15,8 @@ func Ping(c *gin.Context) {
 
 func CocktailByIngredient(c *gin.Context) {
 	log.Println("In cocktail main handler")
+	result := c.Request.URL.Query()
+	log.Println(result)
 
 	c.JSON(200, gin.H{
 		"message": "ingredient",

@@ -31,19 +31,16 @@ var storePointer *Store
 
 //creating new store
 func StoreInit() *Store {
-	s := Store{}
-	storePointer = &s
+	storePointer = &Store{}
 	storePointer.LoadCocktails()
 	return storePointer
 }
 
 func GetStore() *Store {
-	if storePointer != nil {
-		return storePointer
-	} else {
+	if storePointer == nil {
 		StoreInit()
-		return storePointer
 	}
+	return storePointer
 }
 
 func ReadDataFile() ([]byte, error) {
@@ -64,7 +61,7 @@ func ReadDataFile() ([]byte, error) {
 	return data, nil
 }
 
-//load cocktails recipes from file
+//load cocktails recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
 	data, _ := ReadDataFile()
