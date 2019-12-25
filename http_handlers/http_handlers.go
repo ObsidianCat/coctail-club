@@ -13,6 +13,7 @@ func Ping(c *gin.Context) {
 	})
 }
 
+// CocktailByIngredient http request handler
 func CocktailByIngredient(c *gin.Context) {
 	log.Println("In cocktail main handler")
 	result := c.Request.URL.Query()
@@ -23,13 +24,14 @@ func CocktailByIngredient(c *gin.Context) {
 	})
 }
 
+// CocktailByName http request handler
 func CocktailByName(c *gin.Context) {
 	log.Println("In cocktail main handler")
 	name := strings.ToLower(c.Param("name"))
 	store := common.GetStore()
-	cId, isFound := store.ByName[name]
+	cID, isFound := store.ByName[name]
 	if isFound {
-		cocktail := store.ById[cId]
+		cocktail := store.ByID[cID]
 		c.JSON(200, cocktail)
 	} else {
 		c.JSON(404, gin.H{

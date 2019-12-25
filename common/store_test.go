@@ -8,18 +8,18 @@ import (
 
 var cocktailsListMock = []Cocktail{
 	Cocktail{
-		Id:          1,
+		ID:          1,
 		Name:        "Espresso Martini",
 		Ingredients: []string{"Vodka", "Kahlua", "Espresso Coffee", "Sugar Syrup"},
 		Preparation: string("Combine all ingredients in a shaker filled with ice & shake well.\nStrain the mixture into a chilled cocktail Martini glass.\nCarefully place three coffee beans on top of the drink for garnish & serve."),
-		Url:         string("https://thebarcabinet.com/recipes/vodka-cocktails/espresso-martini/"),
+		URL:         string("https://thebarcabinet.com/recipes/vodka-cocktails/espresso-martini/"),
 	},
 	Cocktail{
-		Id:          2,
+		ID:          2,
 		Name:        "Mojito",
 		Ingredients: []string{"White Rum", "Sugar Syrup", "Lime Wedges", "Fresh Mint", "Soda Water"},
 		Preparation: string("Place the Mint, Sugar Syrup & Lime wedges into a highball glass & lightly muddle the ingredients together. The Lime wedges & Mint leaves should be bruised to release their juices & essential oils.\nFill the glass with crushed ice, pour over the White Rum & stir.\nTop up with Soda Water & stir well from the bottom up.\nGarnish with a sprig of Mint & serve with a straw."),
-		Url:         string("https://thebarcabinet.com/recipes/rum-cocktails/mojito/"),
+		URL:         string("https://thebarcabinet.com/recipes/rum-cocktails/mojito/"),
 	}}
 
 func TestStoreCreation(t *testing.T) {
@@ -47,8 +47,8 @@ func TestLoadingDataIntoStore(t *testing.T) {
 
 	})
 
-	t.Run("Create ById structure", func(t *testing.T) {
-		result := convertCocktailsListIntoById(cocktailsListMock)
+	t.Run("Create ByID structure", func(t *testing.T) {
+		result := convertCocktailsListIntoByID(cocktailsListMock)
 		require.NotNil(t, result)
 	})
 }

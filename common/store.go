@@ -11,18 +11,20 @@ import (
 )
 
 // define data structure
+
+//Cocktail item structure
 type Cocktail struct {
 	Name        string
 	Ingredients []string
-	Id          int
+	ID          int
 	Preparation string
-	Url         string
+	URL         string
 }
 
 type Cocktails []Cocktail
 
 type Store struct {
-	ById         map[int]Cocktail
+	ByID         map[int]Cocktail
 	ByIngredient map[string][]int
 	ByName       map[string]int
 }
@@ -76,22 +78,22 @@ func (s *Store) LoadCocktails() {
 	}
 
 	//(*s) converting pointer of the receiver to the value of the receiver
-	(*s).ById = convertCocktailsListIntoById(cocktailsList)
+	(*s).ByID = convertCocktailsListIntoByID(cocktailsList)
 	(*s).ByIngredient = convertCocktailsListInByIngredient(cocktailsList)
 	(*s).ByName = convertCocktailsListIntoByName(cocktailsList)
 }
 
-func convertCocktailsListIntoById(cocktails []Cocktail) map[int]Cocktail {
-	byId := make(map[int]Cocktail)
+func convertCocktailsListIntoByID(cocktails []Cocktail) map[int]Cocktail {
+	byID := make(map[int]Cocktail)
 	for _, c := range cocktails {
-		byId[c.Id] = c
+		byID[c.ID] = c
 	}
-	return byId
+	return byID
 }
 func convertCocktailsListIntoByName(cocktails []Cocktail) map[string]int {
 	byName := make(map[string]int)
 	for _, c := range cocktails {
-		byName[strings.ToLower(c.Name)] = c.Id
+		byName[strings.ToLower(c.Name)] = c.ID
 	}
 	return byName
 }
@@ -109,9 +111,9 @@ func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 				termNormalized := strings.ToLower(term)
 				elem, ok := byIngredient[termNormalized]
 				if ok {
-					byIngredient[termNormalized] = append(elem, c.Id)
+					byIngredient[termNormalized] = append(elem, c.ID)
 				} else {
-					byIngredient[termNormalized] = []int{c.Id}
+					byIngredient[termNormalized] = []int{c.ID}
 				}
 			}
 		}
