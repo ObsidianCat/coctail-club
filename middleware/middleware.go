@@ -3,12 +3,15 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 )
 
 func QueryChecker() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		log.Println("In Checker middleware")
-		c.Next()
+		query := c.Request.URL.Query()
+		if len(query) <= 0 {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Message": "ingredient for search as Query parameter is expected"})
+		}
 	}
 }
 

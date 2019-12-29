@@ -15,13 +15,23 @@ func Ping(c *gin.Context) {
 
 // CocktailByIngredient http request handler
 func CocktailByIngredient(c *gin.Context) {
-	log.Println("In cocktail main handler")
-	result := c.Request.URL.Query()
-	log.Println(result)
+	store := common.GetStore()
+	log.Println("In cocktail by ingridient main handler")
 
-	c.JSON(200, gin.H{
-		"message": "ingredient",
-	})
+	var queryKeys []string
+	for k := range c.Request.URL.Query() {
+		queryKeys = append(queryKeys, k)
+	}
+
+	mainKey := queryKeys[0]
+
+	foundCoctailsIds := store.ByIngredient[mainKey]
+	var foundCoctails common.Cocktails
+	for _, id := range foundCoctailsIds {
+		foundCoctails = append(foundCoctails, store.ByID[id])
+	}
+
+	c.JSON(200, foundCoctails)
 }
 
 // CocktailByName http request handler
