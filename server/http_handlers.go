@@ -1,4 +1,4 @@
-package http_handlers
+package server
 
 import (
 	"cocktail-club/common"
