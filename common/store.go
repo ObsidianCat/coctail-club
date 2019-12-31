@@ -97,7 +97,6 @@ func convertCocktailsListIntoByName(cocktails []Cocktail) map[string]int {
 	}
 	return byName
 }
-
 func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 	byIngredient := make(map[string][]int)
 	for _, c := range cocktails {
@@ -119,4 +118,13 @@ func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 		}
 	}
 	return byIngredient
+}
+
+func FindCocktailsByIds(ids []int) []Cocktail {
+	var foundCocktails Cocktails
+	for _, id := range ids {
+		foundCocktails = append(foundCocktails, storePointer.ByID[id])
+	}
+
+	return foundCocktails
 }

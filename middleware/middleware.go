@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"cocktail-club/common"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -10,16 +10,8 @@ func QueryChecker() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		query := c.Request.URL.Query()
 		if len(query) <= 0 {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Message": "ingredient for search as Query parameter is expected"})
+			c.Header(common.ErrorHeaderName, "Query parameter is required")
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{common.ErrorMessageKey: "Expect ingredient as query search parameter"})
 		}
-	}
-}
-
-func LogWriter() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// before request
-		log.Println("In LogWriter middleware")
-
-		c.Next()
 	}
 }
