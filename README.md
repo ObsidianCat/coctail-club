@@ -4,14 +4,14 @@ Make sure that you have Golang installed. Then, in the project root directory, r
 ``$ go run .``
 It is a shortcut for building and running application in one step. 
 ## Examples of usage
-**Cocktail-club** micro-service provides two endpoints. 
-### By name
-/cocktail/name/:name <br>
-To get a cocktail recipe and description, if you know the cocktail name and this cocktail is among Cocktail-club records  
+**Cocktail-club** micro-service provides two options to request for data.
+- by name **/cocktail/name/:name**
+- by ingredient **/cocktail/ingredient?{someParameter}**
+
+To get a cocktail recipe and description, if you know the cocktail name and this cocktail is among Cocktail-club records <br>  
 Example: http://localhost:8080/cocktail/name/mojito
-### By ingredient
-/cocktail/ingredient?{someParameter} <br>
-To get all coctails which contain specific ingredient
+
+To get a list of all cocktail recipes and descriptions, containing specific ingredient <br>  
 Example: http://localhost:8080/cocktail/ingredient?rum
 ## Linting
 Run the following command, to lint all the files in all subdirectories.<br>
