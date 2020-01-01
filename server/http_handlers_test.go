@@ -2,6 +2,7 @@ package server
 
 import (
 	"cocktail-club/common"
+	"cocktail-club/store"
 	"encoding/json"
 	"github.com/stretchr/testify/require"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 )
 
 func TestCocktailByIngredientRoute(t *testing.T) {
-	common.StoreInit()
+	store.StoreInit()
 	router := SetupRouter()
 
 	t.Run("Respond with cocktails list", func(t *testing.T) {
@@ -19,7 +20,7 @@ func TestCocktailByIngredientRoute(t *testing.T) {
 		w := httptest.NewRecorder()
 		req, _ := http.NewRequest("GET", "/cocktail/ingredient?sugar", nil)
 		router.ServeHTTP(w, req)
-		var result []common.Cocktail
+		var result []store.Cocktail
 
 		require.Equal(200, w.Code)
 		err := json.NewDecoder(w.Body).Decode(&result)
@@ -51,7 +52,7 @@ func TestCocktailByIngredientRoute(t *testing.T) {
 }
 
 func TestCocktailByNameRoute(t *testing.T) {
-	common.StoreInit()
+	store.StoreInit()
 	router := SetupRouter()
 
 	t.Run("Respond with cocktail details", func(t *testing.T) {
@@ -60,7 +61,7 @@ func TestCocktailByNameRoute(t *testing.T) {
 		w := httptest.NewRecorder()
 		req, _ := http.NewRequest("GET", "/cocktail/name/mojito", nil)
 		router.ServeHTTP(w, req)
-		var result common.Cocktail
+		var result store.Cocktail
 
 		require.Equal(200, w.Code)
 		err := json.NewDecoder(w.Body).Decode(&result)

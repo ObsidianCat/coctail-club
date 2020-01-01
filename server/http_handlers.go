@@ -2,6 +2,7 @@ package server
 
 import (
 	"cocktail-club/common"
+	"cocktail-club/store"
 	"github.com/gin-gonic/gin"
 	"log"
 	"strings"
@@ -16,7 +17,7 @@ func Ping(c *gin.Context) {
 
 // CocktailByIngredient http request handler
 func CocktailByIngredient(c *gin.Context) {
-	store := common.GetStore()
+	storeRef := store.GetStore()
 
 	var queryKeys []string
 	for k := range c.Request.URL.Query() {
@@ -25,7 +26,7 @@ func CocktailByIngredient(c *gin.Context) {
 
 	mainKey := queryKeys[0]
 
-	foundCocktailsIds := store.ByIngredient[mainKey]
+	foundCocktailsIds := storeRef.ByIngredient[mainKey]
 	log.Println("Found cocktail ids")
 	log.Println(foundCocktailsIds)
 
@@ -35,14 +36,14 @@ func CocktailByIngredient(c *gin.Context) {
 		return
 	}
 
-	foundCocktails := common.FindCocktailsByIds(foundCocktailsIds)
+	foundCocktails := storeRef.FindCocktailsByIds(foundCocktailsIds)
 	c.JSON(200, foundCocktails)
 }
 
 // CocktailByName http request handler
 func CocktailByName(c *gin.Context) {
 	name := strings.ToLower(c.Param("name"))
-	store := common.GetStore()
+	store := store.GetStore()
 	cID, isFound := store.ByName[name]
 	if isFound {
 		cocktail := store.ByID[cID]

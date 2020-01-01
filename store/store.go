@@ -1,4 +1,4 @@
-package common
+package store
 
 import (
 	"encoding/json"
@@ -10,9 +10,7 @@ import (
 	"strings"
 )
 
-// define data structure
-
-//Cocktail item structure
+//Cocktail item is a main data unit for the store
 type Cocktail struct {
 	Name        string
 	Ingredients []string
@@ -21,7 +19,7 @@ type Cocktail struct {
 	URL         string
 }
 
-// Cocktails is list of Cocktail type
+// Cocktails is a list of Cocktail type items
 type Cocktails []Cocktail
 
 // Store contains all data for the service
@@ -29,18 +27,18 @@ type Store struct {
 	ByID         map[int]Cocktail
 	ByIngredient map[string][]int
 	ByName       map[string]int
-	DataPath     string
+	dataPath     string
 }
 
 var storePointer *Store
 
-//StoreInit create new store instance in memory and return pointer to the newly created store
+//StoreInit create new store instance in memory and return reference to the newly created store
 func StoreInit(params ...string) *Store {
 	path := "cocktail_recipes.json"
 	if len(params) > 0 {
 		path = params[0]
 	}
-	storePointer = &Store{DataPath: path}
+	storePointer = &Store{dataPath: path}
 	storePointer.LoadCocktails()
 	return storePointer
 }
@@ -74,7 +72,7 @@ func readDataFile(fileName string) ([]byte, error) {
 //LoadCocktails loads cocktail recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
-	data, _ := readDataFile(s.DataPath)
+	data, _ := readDataFile(s.dataPath)
 
 	// json data
 	cocktailsList := []Cocktail{}
@@ -129,7 +127,7 @@ func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 }
 
 // FindCocktailsByIds accepts cocktail ids as list of ints and return list of cocktail objects
-func FindCocktailsByIds(ids []int) []Cocktail {
+func (s *Store) FindCocktailsByIds(ids []int) []Cocktail {
 	var foundCocktails Cocktails
 	for _, id := range ids {
 		foundCocktails = append(foundCocktails, storePointer.ByID[id])

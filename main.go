@@ -1,12 +1,12 @@
 package main
 
 import (
-	"cocktail-club/common"
 	"cocktail-club/server"
+	"cocktail-club/store"
 )
 
 func main() {
-	common.StoreInit()
+	store.StoreInit()
 	r := server.SetupRouter()
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run() // listen and serve on 0.0.0.0:8080 (localhost:8080)
 }

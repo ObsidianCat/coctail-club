@@ -1,4 +1,4 @@
-package common
+package store
 
 import (
 	"github.com/stretchr/testify/assert"
