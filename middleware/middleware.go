@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// QueryChecker validate that search query is nto empty and prevent request form going further if it is.
 func QueryChecker() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		query := c.Request.URL.Query()

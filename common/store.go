@@ -21,8 +21,10 @@ type Cocktail struct {
 	URL         string
 }
 
+// Cocktails is list of Cocktail type
 type Cocktails []Cocktail
 
+// Store contains all data for the service
 type Store struct {
 	ByID         map[int]Cocktail
 	ByIngredient map[string][]int
@@ -32,9 +34,9 @@ type Store struct {
 
 var storePointer *Store
 
-//creating new store
+//StoreInit create new store instance in memory and return pointer to the newly created store
 func StoreInit(params ...string) *Store {
-	path := CocktailsDataPath
+	path := "cocktail_recipes.json"
 	if len(params) > 0 {
 		path = params[0]
 	}
@@ -43,6 +45,7 @@ func StoreInit(params ...string) *Store {
 	return storePointer
 }
 
+// GetStore return reference to existing store or create new store and return its reference
 func GetStore() *Store {
 	if storePointer == nil {
 		StoreInit()
@@ -50,7 +53,7 @@ func GetStore() *Store {
 	return storePointer
 }
 
-func ReadDataFile(fileName string) ([]byte, error) {
+func readDataFile(fileName string) ([]byte, error) {
 	_, file, _, ok := runtime.Caller(1)
 	if !ok {
 		return nil, errors.New("cannot read file")
@@ -68,10 +71,10 @@ func ReadDataFile(fileName string) ([]byte, error) {
 	return data, nil
 }
 
-//load cocktails recipes from file into store
+//LoadCocktails loads cocktail recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
-	data, _ := ReadDataFile(s.DataPath)
+	data, _ := readDataFile(s.DataPath)
 
 	// json data
 	cocktailsList := []Cocktail{}
@@ -125,6 +128,7 @@ func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 	return byIngredient
 }
 
+// FindCocktailsByIds accepts cocktail ids as list of ints and return list of cocktail objects
 func FindCocktailsByIds(ids []int) []Cocktail {
 	var foundCocktails Cocktails
 	for _, id := range ids {
