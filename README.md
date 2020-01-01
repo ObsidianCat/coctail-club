@@ -8,11 +8,11 @@ It is a shortcut for building and running application in one step.
 - by name **/cocktail/name/:name**
 - by ingredient **/cocktail/ingredient?{someParameter}**
 
-To get a cocktail recipe and description, if you know the cocktail name and this cocktail is among Cocktail-club records <br>  
-Example: http://localhost:8080/cocktail/name/mojito
+Example: getting cocktail recipe and description, when you know the cocktail name and this cocktail is among Cocktail-club records
+http://localhost:8080/cocktail/name/mojito
 
-To get a list of all cocktail recipes and descriptions, containing specific ingredient <br>  
-Example: http://localhost:8080/cocktail/ingredient?rum
+Example: getting list of all cocktail recipes and descriptions, containing specific ingredient
+http://localhost:8080/cocktail/ingredient?rum
 ## Linting
 Run the following command, to lint all the files in all subdirectories.<br>
 ``$ golint ./...``
