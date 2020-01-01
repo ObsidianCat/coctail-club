@@ -1,4 +1,4 @@
-# Cocktails club
+# Cocktail club
 ## Running
 Make sure that you have Golang installed. Then, in the project root directory, run
 ``$ go run .``
