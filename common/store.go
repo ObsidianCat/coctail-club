@@ -27,13 +27,18 @@ type Store struct {
 	ByID         map[int]Cocktail
 	ByIngredient map[string][]int
 	ByName       map[string]int
+	DataPath     string
 }
 
 var storePointer *Store
 
 //creating new store
-func StoreInit() *Store {
-	storePointer = &Store{}
+func StoreInit(params ...string) *Store {
+	path := CocktailsDataPath
+	if len(params) > 0 {
+		path = params[0]
+	}
+	storePointer = &Store{DataPath: path}
 	storePointer.LoadCocktails()
 	return storePointer
 }
@@ -45,14 +50,14 @@ func GetStore() *Store {
 	return storePointer
 }
 
-func ReadDataFile() ([]byte, error) {
+func ReadDataFile(fileName string) ([]byte, error) {
 	_, file, _, ok := runtime.Caller(1)
 	if !ok {
 		return nil, errors.New("cannot read file")
 	}
 
 	prefixPath := filepath.Dir(file)
-	path := prefixPath + "/cocktail_recipes.json"
+	path := prefixPath + "/" + fileName
 
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -66,7 +71,7 @@ func ReadDataFile() ([]byte, error) {
 //load cocktails recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
-	data, _ := ReadDataFile()
+	data, _ := ReadDataFile(s.DataPath)
 
 	// json data
 	cocktailsList := []Cocktail{}
