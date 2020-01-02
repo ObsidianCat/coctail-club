@@ -2,6 +2,7 @@
 ## Running
 Make sure that you have Golang installed. Then, in the project root directory, run<br>
 ``$ go run .``
+
 It is a shortcut for building and running application in one step. 
 ## Examples of usage
 **Cocktail-club** micro-service provides two options to request for data.
