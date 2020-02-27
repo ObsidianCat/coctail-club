@@ -76,7 +76,6 @@ func (s *Store) LoadCocktails() {
 
 	// json data
 	cocktailsList := []Cocktail{}
-	//var cocktailsList []Cocktail
 
 	err := json.Unmarshal(data, &cocktailsList)
 	if err != nil {
