@@ -5,7 +5,7 @@ Make sure that you have Golang installed. Then, in the project root directory, r
 It is a shortcut for building and running application in one step. 
 ## Examples of usage
 **Cocktail-club** micro-service provides two options to request for data.
-- by name **/cocktail/name/:name**
+- by name **/cocktail/name/:name** | http://localhost:8080/cocktail/name/mojito
 - by ingredient **/cocktail/ingredient?{someParameter}**
 
 Example: getting cocktail recipe and description, when you know the cocktail name and this cocktail is among **Cocktail-club** records<br>

@@ -69,7 +69,7 @@ func readDataFile(fileName string) ([]byte, error) {
 	return data, nil
 }
 
-//LoadCocktails loads cocktail recipes from file into store
+// LoadCocktails loads cocktail recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
 	data, _ := readDataFile(s.dataPath)
