@@ -4,6 +4,7 @@ import (
 	"cocktail-club/http_handlers"
 	"cocktail-club/http_handlers/cocktail_by_ingredient"
 	"cocktail-club/http_handlers/cocktail_by_name"
+	"cocktail-club/http_handlers/cocktain_by_id"
 	"cocktail-club/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,7 @@ func SetupRouter() *gin.Engine {
 	r.GET("/ping", http_handlers.Ping)
 	r.GET("/cocktail/ingredient", middleware.QueryChecker(), cocktail_by_ingredient.CocktailsByIngredient)
 	r.GET("/cocktail/name/:name", cocktail_by_name.CocktailByName)
+	r.GET("/cocktail/id/:id", cocktain_by_id.CocktailById)
 
 	return r
 }

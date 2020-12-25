@@ -1,4 +1,4 @@
-package cocktail_by_name
+package cocktain_by_id
 
 import (
 	"cocktail-club/common"
@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-// CocktailByName http request handler
-func CocktailByName(c *gin.Context) {
-	name := strings.ToLower(c.Param("name"))
+// CocktailById http request handler
+func CocktailById(c *gin.Context) {
+	id := strings.ToLower(c.Param("id"))
 
-	cocktailBytes := http_handlers.ProxyRequest(common.Cocktail_DB_URL_SEARCH_BY_NAME + name)
+	cocktailBytes := http_handlers.ProxyRequest(common.COCKTAIL_DB_URL_LOOKUP_BY_ID + id)
 	result := http_handlers.TransformApiBytesToCtails(cocktailBytes)
 
 	if result != nil {

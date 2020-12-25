@@ -1,4 +1,6 @@
 # Cocktail club
+Set of APi routes which allow to lockup cocktails by names and arrnage a cocktails collections which are saved as json files.
+The application make use of data provided by [The Cocktail DB](https://www.thecocktaildb.com/api.php)
 ## Running
 Make sure that you have Golang installed. Then, in the project root directory, run<br>
 ``$ go run .``

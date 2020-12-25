@@ -7,10 +7,12 @@ import (
 )
 
 func TestTransformApiBytesToCtails(t *testing.T) {
-	data, _ := store.ReadDataFile("fixtures/api_cocktails_search_results.json")
-	TransformApiBytesToCtails(data)
-	// fmt.Println(string(data))
-	//fmt.Println(result)
-	require.Equal(t, 1, 1)
+	require := require.New(t)
 
+	data, _ := store.ReadDataFile("fixtures/api_cocktails_search_results.json")
+	result := TransformApiBytesToCtails(data)
+	// fmt.Println(string(data))
+	require.Equal(3, len(result), "should return lsit of 3 cocktails")
+	require.Equal([3]string{"Mojito", "Mojito #3", "Blueberry Mojito"}, [3]string{result[0].Name, result[1].Name, result[2].Name},
+		"Cocktail names should match")
 }

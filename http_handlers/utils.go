@@ -44,7 +44,7 @@ func stringToInt(st string) int {
 	return int(result)
 }
 
-func IntToString(num int) string {
+func intToString(num int) string {
 	result := strconv.Itoa(num)
 	return result
 }
@@ -52,7 +52,7 @@ func IntToString(num int) string {
 func ApiCtailToCtail(input ApiCocktail) store.Cocktail {
 	var ingedientsList []string
 	for i := 1; i <= 5; i++ {
-		value, _ := reflections.GetField(input, "StrIngredient"+IntToString(i))
+		value, _ := reflections.GetField(input, "StrIngredient"+intToString(i))
 		if value != "" {
 			ingedientsList = append(ingedientsList, value.(string))
 		}
@@ -66,6 +66,7 @@ func ApiCtailToCtail(input ApiCocktail) store.Cocktail {
 	}
 	return cTail
 }
+
 func TransformApiBytesToCtails(cocktailBytes []byte) []store.Cocktail {
 	var cocktailsListFromApi ApiSearchResults
 	var cocktailsResults []store.Cocktail
