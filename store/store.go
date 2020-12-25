@@ -51,7 +51,7 @@ func GetStore() *Store {
 	return storePointer
 }
 
-func readDataFile(fileName string) ([]byte, error) {
+func ReadDataFile(fileName string) ([]byte, error) {
 	_, file, _, ok := runtime.Caller(1)
 	if !ok {
 		return nil, errors.New("cannot read file")
@@ -72,7 +72,7 @@ func readDataFile(fileName string) ([]byte, error) {
 // LoadCocktails loads cocktail recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
-	data, _ := readDataFile(s.dataPath)
+	data, _ := ReadDataFile(s.dataPath)
 
 	// json data
 	cocktailsList := []Cocktail{}
