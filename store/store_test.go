@@ -1,6 +1,7 @@
 package store
 
 import (
+	"cocktail-club/common"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
@@ -24,9 +25,11 @@ var cocktailsListMock = []Cocktail{
 
 func TestStoreCreation(t *testing.T) {
 	require := assert.New(t)
+	StoreInit("fixtures/" + common.CocktailCollectionName)
 	storePointer = GetStore()
 	require.NotNil(storePointer)
 	require.Equal(storePointer.ByName["mojito"], 2, "By name map return cocktail id")
+	require.Equal(storePointer.Cocktails[0].Name, "Manhattan", "Cocktails property is nto empty")
 }
 
 func TestLoadingDataIntoStore(t *testing.T) {

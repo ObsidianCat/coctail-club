@@ -1,6 +1,7 @@
 package store
 
 import (
+	"cocktail-club/common"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -19,22 +20,20 @@ type Cocktail struct {
 	URL         string
 }
 
-// Cocktails is a list of Cocktail type items
-type Cocktails []Cocktail
-
 // Store contains all data for the service
 type Store struct {
 	ByID         map[int]Cocktail
 	ByIngredient map[string][]int
 	ByName       map[string]int
 	dataPath     string
+	Cocktails    []Cocktail
 }
 
 var storePointer *Store
 
 //StoreInit create new store instance in memory and return reference to the newly created store
 func StoreInit(params ...string) *Store {
-	path := "cocktail_recipes.json"
+	path := "/" + common.CocktailCollectionName
 	if len(params) > 0 {
 		path = params[0]
 	}
@@ -51,7 +50,7 @@ func GetStore() *Store {
 	return storePointer
 }
 
-func ReadDataFile(fileName string) ([]byte, error) {
+func ReadDataFileWithPathFromCallerFile(fileName string) ([]byte, error) {
 	_, file, _, ok := runtime.Caller(1)
 	if !ok {
 		return nil, errors.New("cannot read file")
@@ -69,10 +68,20 @@ func ReadDataFile(fileName string) ([]byte, error) {
 	return data, nil
 }
 
+func ReadDataFileWithPathFromRoot(fileName string) ([]byte, error) {
+	data, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		fmt.Print(err)
+		return nil, errors.New("cannot read file")
+	}
+
+	return data, nil
+}
+
 // LoadCocktails loads cocktail recipes from file into store
 func (s *Store) LoadCocktails() {
 	// read file
-	data, _ := ReadDataFile(s.dataPath)
+	data, _ := ReadDataFileWithPathFromRoot(s.dataPath)
 
 	// json data
 	cocktailsList := []Cocktail{}
@@ -82,6 +91,8 @@ func (s *Store) LoadCocktails() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
+
+	(*s).Cocktails = cocktailsList
 
 	//(*s) converting pointer of the receiver to the value of the receiver
 	(*s).ByID = convertCocktailsListIntoByID(cocktailsList)
@@ -128,7 +139,7 @@ func convertCocktailsListInByIngredient(cocktails []Cocktail) map[string][]int {
 
 // FindCocktailsByIds accepts cocktail ids as list of ints and return list of cocktail objects
 func (s *Store) FindCocktailsByIds(ids []int) []Cocktail {
-	var foundCocktails Cocktails
+	var foundCocktails []Cocktail
 	for _, id := range ids {
 		foundCocktails = append(foundCocktails, storePointer.ByID[id])
 	}

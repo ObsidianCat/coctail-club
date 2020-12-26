@@ -9,7 +9,7 @@ import (
 func TestTransformApiBytesToCtails(t *testing.T) {
 	require := require.New(t)
 
-	data, _ := store.ReadDataFile("fixtures/api_cocktails_search_results.json")
+	data, _ := store.ReadDataFileWithPathFromCallerFile("fixtures/api_cocktails_search_results.json")
 	result := TransformApiBytesToCtails(data)
 	// fmt.Println(string(data))
 	require.Equal(3, len(result), "should return lsit of 3 cocktails")
