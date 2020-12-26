@@ -33,7 +33,7 @@ var storePointer *Store
 
 //StoreInit create new store instance in memory and return reference to the newly created store
 func StoreInit(params ...string) *Store {
-	path := "/" + common.CocktailCollectionName
+	path := "./" + common.CocktailCollectionName
 	if len(params) > 0 {
 		path = params[0]
 	}
