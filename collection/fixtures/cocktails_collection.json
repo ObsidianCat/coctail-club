@@ -1,0 +1,40 @@
+[
+  {
+    "Name": "Mojito",
+    "Ingredients": [
+      "Dark Rum",
+      "Lime Juice",
+      "Sugar",
+      "Blueberries",
+      "Lemon-lime soda"
+    ],
+    "ID": 178336,
+    "Preparation": "Muddle the blueberries with the other ingredients and serve in a highball glass. Garnish with mint and a half slice of lime.",
+    "Image": ""
+  },
+  {
+    "Name": "Margarita",
+    "Ingredients": [
+      "Tequila",
+      "Triple sec",
+      "Lime juice",
+      "Salt"
+    ],
+    "ID": 11007,
+    "Preparation": "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass.",
+    "Image": "https://commons.wikimedia.org/wiki/File:Klassiche_Margarita.jpg"
+  },
+  {
+    "Name": "National Aquarium",
+    "Ingredients": [
+      "Rum",
+      "Vodka",
+      "Gin",
+      "Blue Curacao",
+      "Sour mix"
+    ],
+    "ID": 13192,
+    "Preparation": "Pour all ingredients into a shaker of ice. Shake well. Serve on the rocks.",
+    "Image": ""
+  }
+]

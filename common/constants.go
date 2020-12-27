@@ -7,6 +7,7 @@ const ErrorHeaderName = "X-Error-Description"
 const ErrorMessageKey = "error"
 
 //
-const Cocktail_DB_URL_SEARCH_BY_NAME = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="
-const COCKTAIL_DB_URL_LOOKUP_BY_ID = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i="
-const CocktailCollectionName = "cocktails_collection.json"
+const CocktailDbUrlSearchByName = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="
+const CocktailDbUrlLookupById = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i="
+const CocktailDbUrlSeacrhByIngredient = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i="
+const CocktailCollectionFilePath = "./cocktails_collection.json"

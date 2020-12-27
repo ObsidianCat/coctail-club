@@ -1,9 +1,8 @@
 package collection
 
 import (
+	"cocktail-club/collection"
 	"cocktail-club/common"
-	"cocktail-club/http_handlers"
-	"cocktail-club/store"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
@@ -11,14 +10,14 @@ import (
 	"strings"
 )
 
-// AddToCollection http request handler
-func AddToCollection(c *gin.Context) {
-	storeRef := store.GetStore()
+// Add http request handler
+func Add(c *gin.Context) {
+	storeRef := collection.GetStore()
 
 	id := strings.ToLower(c.Param("id"))
 
-	cocktailBytes := http_handlers.ProxyRequest(common.COCKTAIL_DB_URL_LOOKUP_BY_ID + id)
-	result := http_handlers.TransformApiBytesToCtails(cocktailBytes)
+	cocktailBytes := common.ProxyRequest(common.CocktailDbUrlLookupById + id)
+	result := common.TransformApiBytesToCtails(cocktailBytes)
 
 	if result != nil {
 		storeRef.Cocktails = append(storeRef.Cocktails, result[0])
@@ -34,9 +33,9 @@ func AddToCollection(c *gin.Context) {
 	}
 }
 
-// AddToCollection http request handler
+// Add http request handler
 func Get(c *gin.Context) {
-	storeRef := store.GetStore()
+	storeRef := collection.GetStore()
 
 	if storeRef != nil {
 		c.JSON(200, storeRef.Cocktails)
@@ -48,13 +47,13 @@ func Get(c *gin.Context) {
 	}
 }
 
-// SaveCollection http request handler
-func SaveCollection(c *gin.Context) {
-	storeRef := store.GetStore()
+// Save http request handler
+func Save(c *gin.Context) {
+	storeRef := collection.GetStore()
 
 	file, _ := json.MarshalIndent(storeRef.Cocktails, "", " ")
 
-	err := ioutil.WriteFile(common.CocktailCollectionName, file, 0644)
+	err := ioutil.WriteFile(common.CocktailCollectionFilePath, file, 0644)
 
 	if err != nil {
 		c.Header(common.ErrorHeaderName, "Cannot save collection file")

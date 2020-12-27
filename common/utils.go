@@ -1,9 +1,12 @@
-package http_handlers
+package common
 
 import (
-	"cocktail-club/store"
 	"encoding/json"
-	//"cocktail-club/store"
+	"errors"
+	"path/filepath"
+	"runtime"
+
+	//"cocktail-club/collection"
 	"fmt"
 	"github.com/oleiade/reflections"
 	"io/ioutil"
@@ -11,24 +14,11 @@ import (
 	"strconv"
 )
 
-type ApiCocktail struct {
-	Name           string `json:"strDrink"`
-	ID             string `json:"idDrink"`
-	StrIngredient1 string `json:"strIngredient1"`
-	StrIngredient2 string `json:"strIngredient2"`
-	StrIngredient3 string `json:"strIngredient3"`
-	StrIngredient4 string `json:"strIngredient4"`
-	StrIngredient5 string `json:"strIngredient5"`
-	strMeasure1    string `json:"strMeasure1"`
-	strMeasure2    string `json:"strMeasure2"`
-	StrMeasure3    string `json:"strMeasure3"`
-	StrMeasure4    string `json:"strMeasure4"`
-	StrMeasure5    string `json:"strMeasure5"`
-	Preparations   string `json:"strInstructions"`
-}
-
-type ApiSearchResults struct {
+type apiSearchResultsByName struct {
 	Cocktails []ApiCocktail `json:"drinks"`
+}
+type apiSearchResultsByIngredient struct {
+	Cocktails []CocktailPreview `json:"drinks"`
 }
 
 // ProxyRequest proxies request to external cocktail API
@@ -49,7 +39,7 @@ func intToString(num int) string {
 	return result
 }
 
-func ApiCtailToCtail(input ApiCocktail) store.Cocktail {
+func ApiCtailToCtail(input ApiCocktail) Cocktail {
 	var ingedientsList []string
 	for i := 1; i <= 5; i++ {
 		value, _ := reflections.GetField(input, "StrIngredient"+intToString(i))
@@ -57,19 +47,19 @@ func ApiCtailToCtail(input ApiCocktail) store.Cocktail {
 			ingedientsList = append(ingedientsList, value.(string))
 		}
 	}
-	cTail := store.Cocktail{
+	cTail := Cocktail{
 		Name:        input.Name,
 		Ingredients: ingedientsList,
 		ID:          stringToInt(input.ID),
 		Preparation: input.Preparations,
-		URL:         "",
+		Image:       input.Image,
 	}
 	return cTail
 }
 
-func TransformApiBytesToCtails(cocktailBytes []byte) []store.Cocktail {
-	var cocktailsListFromApi ApiSearchResults
-	var cocktailsResults []store.Cocktail
+func TransformApiBytesToCtails(cocktailBytes []byte) []Cocktail {
+	var cocktailsListFromApi apiSearchResultsByName
+	var cocktailsResults []Cocktail
 
 	err := json.Unmarshal(cocktailBytes, &cocktailsListFromApi)
 	if err != nil {
@@ -80,4 +70,34 @@ func TransformApiBytesToCtails(cocktailBytes []byte) []store.Cocktail {
 		cocktailsResults = append(cocktailsResults, ApiCtailToCtail(apiCTail))
 	}
 	return cocktailsResults
+}
+
+func TransformApiBytesToCtailPreview(cocktailBytes []byte) []CocktailPreview {
+	var cocktailsListFromApi apiSearchResultsByIngredient
+	//var cocktailsResults []CocktailPreview
+
+	err := json.Unmarshal(cocktailBytes, &cocktailsListFromApi)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	return cocktailsListFromApi.Cocktails
+}
+
+func ReadDataFileWithPathFromCallerFile(fileName string) ([]byte, error) {
+	_, file, _, ok := runtime.Caller(1)
+	if !ok {
+		return nil, errors.New("cannot read file")
+	}
+
+	prefixPath := filepath.Dir(file)
+	path := prefixPath + "/" + fileName
+
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Print(err)
+		return nil, errors.New("cannot read file")
+	}
+
+	return data, nil
 }
