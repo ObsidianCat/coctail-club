@@ -1,9 +1,9 @@
 package server
 
 import (
-	"cocktail-club/http_handlers"
-	"cocktail-club/http_handlers/cocktails"
-	"cocktail-club/http_handlers/collection"
+	"cocktail-club/httphandlers"
+	"cocktail-club/httphandlers/cocktails"
+	"cocktail-club/httphandlers/collection"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,11 +11,11 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
-	router.GET("/ping", http_handlers.Ping)
+	router.GET("/ping", httphandlers.Ping)
 
 	router.GET("/cocktails/ingredient/:name", cocktails.GetByIngredient)
 	router.GET("/cocktails/name/:name", cocktails.GetByName)
-	router.GET("/cocktails/id/:id", cocktails.GetById)
+	router.GET("/cocktails/id/:id", cocktails.GetByID)
 
 	router.PUT("/collection/add/id/:id", collection.Add)
 	router.POST("/collection", collection.Save)

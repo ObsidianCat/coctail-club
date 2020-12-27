@@ -16,8 +16,8 @@ func Add(c *gin.Context) {
 
 	id := strings.ToLower(c.Param("id"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbUrlLookupById + id)
-	result := common.TransformApiBytesToCtails(cocktailBytes)
+	cocktailBytes := common.ProxyRequest(common.CocktailDbURLLookupByID + id)
+	result := common.TransformAPIBytesToCtails(cocktailBytes)
 
 	if result != nil {
 		storeRef.Cocktails = append(storeRef.Cocktails, result[0])
@@ -33,7 +33,7 @@ func Add(c *gin.Context) {
 	}
 }
 
-// Add http request handler
+// Get http request handler
 func Get(c *gin.Context) {
 	storeRef := collection.GetStore()
 

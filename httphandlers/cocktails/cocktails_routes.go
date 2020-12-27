@@ -10,8 +10,8 @@ import (
 func GetByName(c *gin.Context) {
 	name := strings.ToLower(c.Param("name"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbUrlSearchByName + name)
-	result := common.TransformApiBytesToCtails(cocktailBytes)
+	cocktailBytes := common.ProxyRequest(common.CocktailDbURLSearchByName + name)
+	result := common.TransformAPIBytesToCtails(cocktailBytes)
 
 	if result != nil {
 		c.JSON(200, result)
@@ -27,8 +27,8 @@ func GetByName(c *gin.Context) {
 func GetByIngredient(c *gin.Context) {
 	name := strings.ToLower(c.Param("name"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbUrlSeacrhByIngredient + name)
-	result := common.TransformApiBytesToCtailPreview(cocktailBytes)
+	cocktailBytes := common.ProxyRequest(common.CocktailDbURLSeacrhByIngredient + name)
+	result := common.TransformAPIBytesToCtailPreview(cocktailBytes)
 
 	if result != nil {
 		c.JSON(200, result)
@@ -40,12 +40,12 @@ func GetByIngredient(c *gin.Context) {
 	}
 }
 
-// GetById http request handler
-func GetById(c *gin.Context) {
+// GetByID http request handler
+func GetByID(c *gin.Context) {
 	id := strings.ToLower(c.Param("id"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbUrlLookupById + id)
-	result := common.TransformApiBytesToCtails(cocktailBytes)
+	cocktailBytes := common.ProxyRequest(common.CocktailDbURLLookupByID + id)
+	result := common.TransformAPIBytesToCtails(cocktailBytes)
 
 	if result != nil {
 		c.JSON(200, result)

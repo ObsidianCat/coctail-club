@@ -1,6 +1,6 @@
 package common
 
-//Cocktail item is a main data unit for the collection
+// Cocktail item is a main data unit for the collection
 type Cocktail struct {
 	Name        string
 	Ingredients []string
@@ -9,7 +9,8 @@ type Cocktail struct {
 	Image       string
 }
 
-type ApiCocktail struct {
+// APICocktail type describes relevant fields from API response
+type APICocktail struct {
 	Name           string `json:"strDrink"`
 	ID             string `json:"idDrink"`
 	StrIngredient1 string `json:"strIngredient1"`
@@ -26,6 +27,7 @@ type ApiCocktail struct {
 	Image          string `json:"strImageSource"`
 }
 
+// CocktailPreview type describes API results cocktails previews
 type CocktailPreview struct {
 	Name string `json:"strDrink"`
 	ID   string `json:"idDrink"`

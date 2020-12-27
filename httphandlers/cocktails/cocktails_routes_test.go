@@ -94,7 +94,7 @@ func TestCocktailsByNameRoute(t *testing.T) {
 
 func TestCocktailByIdRoute(t *testing.T) {
 	router := gin.Default()
-	router.GET("/cocktail/id/:name", GetById)
+	router.GET("/cocktail/id/:name", GetByID)
 
 	t.Run("Respond with cocktail details", func(t *testing.T) {
 		require := require.New(t)
