@@ -22,11 +22,19 @@ type apiSearchResultsByIngredient struct {
 }
 
 // ProxyRequest proxies request to external cocktail API
-func ProxyRequest(cocktailsAPIUrl string) []byte {
-	res, _ := http.Get(cocktailsAPIUrl)
+func ProxyRequest(cocktailsAPIUrl string) ([]byte, error) {
+	res, err := http.Get(cocktailsAPIUrl)
+	if err != nil {
+		return nil, err
+	}
+
 	var bytes []byte
-	bytes, _ = ioutil.ReadAll(res.Body)
-	return bytes
+	bytes, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return bytes, nil
 }
 
 func stringToInt(st string) int {
@@ -58,32 +66,32 @@ func apiCtailToCtail(input APICocktail) Cocktail {
 }
 
 // TransformAPIBytesToCtails convert external API data to cocktails
-func TransformAPIBytesToCtails(cocktailBytes []byte) []Cocktail {
+func TransformAPIBytesToCtails(cocktailBytes []byte) ([]Cocktail, error) {
 	var cocktailsListFromAPI apiSearchResultsByName
 	var cocktailsResults []Cocktail
 
 	err := json.Unmarshal(cocktailBytes, &cocktailsListFromAPI)
 	if err != nil {
-		fmt.Println("error:", err)
+		return nil, err
 	}
 
 	for _, apiCTail := range cocktailsListFromAPI.Cocktails {
 		cocktailsResults = append(cocktailsResults, apiCtailToCtail(apiCTail))
 	}
-	return cocktailsResults
+	return cocktailsResults, nil
 }
 
 // TransformAPIBytesToCtailPreview convert external API data to cocktail previews
-func TransformAPIBytesToCtailPreview(cocktailBytes []byte) []CocktailPreview {
+func TransformAPIBytesToCtailPreview(cocktailBytes []byte) ([]CocktailPreview, error) {
 	var cocktailsListFromAPI apiSearchResultsByIngredient
 	//var cocktailsResults []CocktailPreview
 
 	err := json.Unmarshal(cocktailBytes, &cocktailsListFromAPI)
 	if err != nil {
-		fmt.Println("error:", err)
+		return nil, err
 	}
 
-	return cocktailsListFromAPI.Cocktails
+	return cocktailsListFromAPI.Cocktails, nil
 }
 
 // ReadDataFileWithPathFromCallerFile allow to create path to file start from file which call the function instead of project root

@@ -46,7 +46,7 @@ func readDataFileWithPathFromRoot(fileName string) ([]byte, error) {
 }
 
 // LoadCocktails loads cocktail recipes from file into collection
-func (s *Store) LoadCocktails() {
+func (s *Store) LoadCocktails() error {
 	// read file
 	data, _ := readDataFileWithPathFromRoot(s.dataPath)
 
@@ -56,8 +56,11 @@ func (s *Store) LoadCocktails() {
 	err := json.Unmarshal(data, &cocktailsList)
 	if err != nil {
 		fmt.Println("error:", err)
+		return err
 	}
 
 	//(*s) converting pointer of the receiver to the value of the receiver
 	(*s).Cocktails = cocktailsList
+
+	return nil
 }

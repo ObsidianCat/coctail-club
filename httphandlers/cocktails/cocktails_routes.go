@@ -3,6 +3,8 @@ package cocktails
 import (
 	"cocktail-club/common"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
 	"strings"
 )
 
@@ -10,16 +12,17 @@ import (
 func GetByName(c *gin.Context) {
 	name := strings.ToLower(c.Param("name"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbURLSearchByName + name)
-	result := common.TransformAPIBytesToCtails(cocktailBytes)
+	cocktailBytes, _ := common.ProxyRequest(common.CocktailDbURLSearchByName + name)
+	result, err := common.TransformAPIBytesToCtails(cocktailBytes)
 
-	if result != nil {
-		c.JSON(200, result)
-	} else {
+	if err != nil {
+		log.Println(err.Error())
 		c.Header(common.ErrorHeaderName, "Cocktail not found")
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			common.ErrorMessageKey: "Cocktail with this name not found",
 		})
+	} else {
+		c.JSON(http.StatusOK, result)
 	}
 }
 
@@ -27,16 +30,17 @@ func GetByName(c *gin.Context) {
 func GetByIngredient(c *gin.Context) {
 	name := strings.ToLower(c.Param("name"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbURLSeacrhByIngredient + name)
-	result := common.TransformAPIBytesToCtailPreview(cocktailBytes)
-
-	if result != nil {
-		c.JSON(200, result)
-	} else {
+	cocktailBytes, _ := common.ProxyRequest(common.CocktailDbURLSeacrhByIngredient + name)
+	result, err := common.TransformAPIBytesToCtailPreview(cocktailBytes)
+	if err != nil {
+		log.Println(err.Error())
 		c.Header(common.ErrorHeaderName, "Ingredient not found")
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			common.ErrorMessageKey: "No cocktails with this ingredient",
 		})
+	} else {
+		c.JSON(http.StatusOK, result)
+
 	}
 }
 
@@ -44,16 +48,17 @@ func GetByIngredient(c *gin.Context) {
 func GetByID(c *gin.Context) {
 	id := strings.ToLower(c.Param("id"))
 
-	cocktailBytes := common.ProxyRequest(common.CocktailDbURLLookupByID + id)
-	result := common.TransformAPIBytesToCtails(cocktailBytes)
+	cocktailBytes, _ := common.ProxyRequest(common.CocktailDbURLLookupByID + id)
+	result, err := common.TransformAPIBytesToCtails(cocktailBytes)
 
-	if result != nil {
-		c.JSON(200, result)
-	} else {
+	if err != nil {
 		c.Header(common.ErrorHeaderName, "Cocktail not found")
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			common.ErrorMessageKey: "Cocktail with this name not found",
 		})
+		log.Println(err.Error())
+	} else {
+		c.JSON(http.StatusOK, result)
 	}
 
 }
