@@ -59,8 +59,7 @@ func (s *Store) LoadCocktails() error {
 		return err
 	}
 
-	//(*s) converting pointer of the receiver to the value of the receiver
-	(*s).Cocktails = cocktailsList
+	s.Cocktails = cocktailsList
 
 	return nil
 }
