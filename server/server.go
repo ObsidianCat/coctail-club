@@ -13,7 +13,7 @@ func SetupRouter() *gin.Engine {
 
 	router.GET("/ping", httphandlers.Ping)
 
-	router.GET("/cocktails/ingredient/:name", cocktails.GetByIngredient)
+	router.GET("/cocktails/ingredient/:ingredient", cocktails.GetByIngredient)
 	router.GET("/cocktails/name/:name", cocktails.GetByName)
 	router.GET("/cocktails/id/:id", cocktails.GetByID)
 

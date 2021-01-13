@@ -28,9 +28,9 @@ func GetByName(c *gin.Context) {
 
 // GetByIngredient http request handler
 func GetByIngredient(c *gin.Context) {
-	name := strings.ToLower(c.Param("name"))
+	ingr := strings.ToLower(c.Param("ingredient"))
 
-	cocktailBytes, _ := common.ProxyRequest(common.CocktailDbURLSeacrhByIngredient + name)
+	cocktailBytes, _ := common.ProxyRequest(common.CocktailDbURLSeacrhByIngredient + ingr)
 	result, err := common.TransformAPIBytesToCtailPreview(cocktailBytes)
 	if err != nil {
 		log.Println(err.Error())

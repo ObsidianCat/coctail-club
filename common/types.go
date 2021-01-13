@@ -27,7 +27,7 @@ type APICocktail struct {
 	Image          string `json:"strImageSource"`
 }
 
-// CocktailPreview type describes API results cocktails previews
+// CocktailPreview type describes API results previews
 type CocktailPreview struct {
 	Name string `json:"strDrink"`
 	ID   string `json:"idDrink"`
